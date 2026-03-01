@@ -1,6 +1,6 @@
-# autoply
+# `scrix`
 
-An automated job application tool
+Weekly BOGO Publix deals
 
 ## Gemini setup (for `test.py`)
 
