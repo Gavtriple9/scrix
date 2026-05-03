@@ -292,6 +292,8 @@ async def async_main():
             )
             print("Page loaded")
 
+            await asyncio.sleep(15)  # Ensure all content is fully loaded and rendered
+
             flat_deals = await scrape_publix(page)
             await browser.close()
 
