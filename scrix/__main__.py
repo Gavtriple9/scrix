@@ -98,8 +98,7 @@ async def is_element_visible(element: ElementHandle) -> bool:
     Returns:
         bool: True if the element is visible, False otherwise
     """
-    return await element.evaluate(
-        """(el) => {
+    return await element.evaluate("""(el) => {
             const rect = el.getBoundingClientRect();
             return (
                 rect.top >= 0 &&
@@ -107,8 +106,7 @@ async def is_element_visible(element: ElementHandle) -> bool:
                 rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
                 rect.right <= (window.innerWidth || document.documentElement.clientWidth)
             );
-        }"""
-    )
+        }""")
 
 
 async def extract_text(card: ElementHandle, selector: str) -> str | None:
@@ -288,9 +286,10 @@ async def async_main():
 
             await page.goto(URL, wait_until="domcontentloaded")
 
-            # Wait for the content wrapper to be present
-            await page.wait_for_selector(".weekly-ad-xp-content-wrapper", timeout=15000)
-            await asyncio.sleep(30)
+            # Wait for real deal cards to appear (skeleton replaced by content)
+            await page.wait_for_selector(
+                '[data-qa="savings-weekly-card"]', timeout=60000
+            )
             print("Page loaded")
 
             flat_deals = await scrape_publix(page)
